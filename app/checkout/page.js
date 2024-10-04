@@ -34,16 +34,24 @@ export default function Checkout() {
         // // Pass the Element directly to other Stripe.js methods:
         // // e.g. createToken - https://stripe.com/docs/js/tokens_sources/create_token?type=cardElement
         // get token back from stripe to process credit card
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
         const token = await stripe.createToken(cardElement);
         const userToken = Cookies.get("token");
         const response = await fetch(`${API_URL}/api/orders`, {
             method: "POST",
+            headers: {
+                "Content-Type":"application/json",
+            },
             // headers: userToken && { Authorization: `Bearer ${userToken}` },
             body: JSON.stringify({
                 amount: Number(Math.round(cartTotal + "e2") + "e-2"),
-                dishes: Object.values(cart),
+                dishes: Object.values(cart).map((dish) => {
+                    return {
+                        ...dish,
+                        item:dish.item._id
+                    }
+                }),
                 name: data.name,
                 address: data.address,
                 city: data.city,
@@ -81,23 +89,23 @@ export default function Checkout() {
             <div className="content">
                 <label>
                     Name
-                    <input value={data.name} onChange={onChange} name="name" />
+                    <input value={data.name} onChange={onChange} name="name" required/>
                 </label>
                 <label>
                     Address
-                    <input value={data.address} onChange={onChange} name="address" />
+                    <input value={data.address} onChange={onChange} name="address" required/>
                 </label>
                 <label>
                     City
-                    <input value={data.city} onChange={onChange} name="city" />
+                    <input value={data.city} onChange={onChange} name="city" required/>
                 </label>
                 <label>
                     State
-                    <input value={data.state} onChange={onChange} name="state" />
+                    <input value={data.state} onChange={onChange} name="state" required/>
                 </label>
                 <label>
                     Zip Code
-                    <input value={data.zipCode} onChange={onChange} name="zipCode" />
+                    <input value={data.zipCode} onChange={onChange} name="zipCode" required/>
                 </label>
                 {/* <CardNumberElement/>
                 <CardExpiryElement/>

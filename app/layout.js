@@ -2,7 +2,7 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppContext from "./contexts/appContext";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
@@ -26,6 +26,48 @@ const geistMono = localFont({
 
 export default function RootLayout({ children }) {
   const [cart, setCart] = useState({})
+  const [management, setManagement] = useState(null)
+  const [userData, setUserData] = useState(null)
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: ""
+  })
+
+  function onChangeSignIn(e) {
+    setSignInData({ ...signInData, [e.target.name]: e.target.value });
+  }
+
+  async function handleSignIn(e) {
+    e.preventDefault()
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(signInData)
+    })
+    if (!response.ok) {
+      const body = await response.json()
+      alert(body.message)
+      return
+    }
+    getUserData()
+  }
+
+  async function getUserData() {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    const response = await fetch(`${API_URL}/api/users/me`)
+    if (response.ok) {
+      const body = await response.json()
+      console.log(body)
+      setUserData(body)
+    }
+  }
+  useEffect(() => {
+
+    getUserData()
+
+  }, [])
   function addItem(item) {
     setCart((prevCart) => {
       return {
@@ -54,6 +96,17 @@ export default function RootLayout({ children }) {
       }
     })
   }
+  async function handleLogOut() {
+    await fetch("/api/users/logout")
+    setUserData(null)
+  }
+
+  async function loginWithGoogle() {
+    const response = await fetch("/api/users/oauth2/start")
+    const { authorizationUrl } = await response.json()
+    window.location.href = authorizationUrl
+  }
+
   const cartTotal = Object.values(cart).reduce((acc, { item, quantity }) => {
     return acc + item.price * quantity
   }, 0)
@@ -63,7 +116,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} page-layout`}>
-        <h1>Restaurant App</h1>
+        <div className="menu-bar">
+          <h1 className="sticker title">RestauranTour!</h1>
+          {userData ? <div className="account-management">
+              <div className="sticker user-name">{userData.name}</div>
+            <button onClick={handleLogOut}>Log Out</button>
+          </div> : !management ? <div className="account-management">
+            <Link href="/register">Create Account</Link>
+            <button onClick={() => { setManagement("Sign In") }}>Sign In</button>
+            <button onClick={loginWithGoogle}>Google Sign-In</button>
+          </div> : <form className="account-management" onSubmit={handleSignIn}>
+            <input name="email" type="email" onChange={onChangeSignIn} />
+            <input name="password" type="password" onChange={onChangeSignIn} />
+            <button>{management}</button>
+            <button type="button" onClick={() => { setManagement(null) }}>X</button>
+          </form>}
+        </div>
         <AppContext.Provider value={{ addItem: addItem, cart: cart, removeItem: removeItem, cartTotal: cartTotal }}>
           <Elements stripe={stripePromise}>
             {children}

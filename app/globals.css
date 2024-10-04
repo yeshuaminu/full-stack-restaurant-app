@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Updock&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -248,4 +250,70 @@ p {
 .card-label {
   text-decoration: underline;
   margin-bottom: 1rem;
+}
+
+.menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0.5rem;
+}
+
+.account-management {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.account-management button, .search button, .register-form button, .account-management a {
+  padding: 5px;
+  background-color: lightgreen;
+  color: white;
+  border-color: lightgreen;
+  border-width: 2px;
+  border-style: outset;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  text-decoration: none;
+  font-size: initial;
+}
+
+.account-management button:active, .search button:active, .register-form button:active, .account-management a:active {
+  border-style: inset;
+}
+.search {
+  display: flex;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 15rem;
+  margin-left: 15rem;
+  padding-top: 2.5rem;
+}
+
+.register-form button, .register-form input {
+  padding: 3px;
+}
+
+.register-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.sticker {
+  background-color: lightsteelblue;
+  border-radius: 15px;
+  padding: 5px;
+  color:lemonchiffon;
+  font-family: "Updock", cursive;
+}
+
+.user-name {
+  font-size: x-large;
+}
+
+.title {
+  font-size: 50px;
 }
