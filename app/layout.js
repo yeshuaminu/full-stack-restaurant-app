@@ -55,8 +55,7 @@ export default function RootLayout({ children }) {
   }
 
   async function getUserData() {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-    const response = await fetch(`${API_URL}/api/users/me`)
+    const response = await fetch(`/api/users/me`)
     if (response.ok) {
       const body = await response.json()
       console.log(body)

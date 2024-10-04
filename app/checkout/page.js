@@ -38,7 +38,7 @@ export default function Checkout() {
 
         const token = await stripe.createToken(cardElement);
         const userToken = Cookies.get("token");
-        const response = await fetch(`${API_URL}/api/orders`, {
+        const response = await fetch("/api/orders", {
             method: "POST",
             headers: {
                 "Content-Type":"application/json",

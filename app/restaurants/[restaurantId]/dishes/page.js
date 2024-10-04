@@ -11,7 +11,7 @@ export default function Dishes({ params: { restaurantId } }) {
   const [submittedSearch, setSubmittedSearch] = useState("")
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:8080/api/restaurants/${restaurantId}/dishes`)
+      const response = await fetch(`/api/restaurants/${restaurantId}/dishes`)
       const data = await response.json()
       setDishData(data)
     }

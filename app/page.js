@@ -10,7 +10,7 @@ export default function Restaurants() {
   const [submittedSearch, setSubmittedSearch] = useState("")
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:8080/api/restaurants")
+      const response = await fetch("/api/restaurants")
       const data = await response.json()
       setRestaurantData(data)
     }
