@@ -116,9 +116,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} page-layout`}>
         <div className="menu-bar">
-          <h1 className="sticker title">RestauranTour!</h1>
+          <h1 className="sticker title">
+            <Link href="/">RestauranTour</Link>
+          </h1>
           {userData ? <div className="account-management">
-              <div className="sticker user-name">{userData.name}</div>
+            <div className="sticker user-name">{userData.name}</div>
             <button onClick={handleLogOut}>Log Out</button>
           </div> : !management ? <div className="account-management">
             <Link href="/register">Create Account</Link>
@@ -136,6 +138,20 @@ export default function RootLayout({ children }) {
             {children}
           </Elements>
         </AppContext.Provider>
+        <footer>
+          <Link className="link" href="/support">Contact Us</Link>
+          <div className="social-media">
+          <a href="https://www.facebook.com" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Facebook_icon_2013.svg" />
+          </a>
+          <a href="https://www.instagram.com" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" />
+          </a>
+          <a href="https://www.twitter.com" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/X_logo_2023_original.svg" />
+          </a>
+          </div>
+        </footer>
       </body>
     </html>
   );

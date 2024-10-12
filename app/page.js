@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Cart from "./components/Cart";
+import ProductCard from "./components/ProductCard";
 
+const giftCardDenominations = [20]
 export default function Restaurants() {
   const [restaurantData, setRestaurantData] = useState(null)
   const [search, setSearch] = useState("")
@@ -30,11 +32,10 @@ export default function Restaurants() {
         <button onClick={submitSearch}>Search</button>
       </div>
       <div className="card-grid">
-        {restaurantData ? (filteredList.length ? filteredList
+        {restaurantData ? (filteredList.length ? <>{filteredList
           .map((restaurant) => {
             return <div className="card" key={restaurant._id}>
-              <div className="img-container" style={{backgroundImage: `url("${restaurant.image}")`}}>
-                {/* <img src={restaurant.image} /> */}
+              <div className="img-container" style={{ backgroundImage: `url("${restaurant.image}")` }}>
               </div>
               <h1>
                 <Link href={"/restaurants/" + restaurant._id + "/dishes"}>{restaurant.name}</Link>
@@ -43,9 +44,21 @@ export default function Restaurants() {
                 <p>{restaurant.description}</p>
               </div>
             </div>
-          }) : <div>No Results Found</div>) : <div>Loading</div>}
+          })}
+          {giftCardDenominations.map((price) => {
+            return <ProductCard type="giftcard" key={price} product={
+              {
+                name: "Gift Card",
+                description: "RestauranTour Tour Pass",
+                price: price,
+                image: "https://assets.codepen.io/373707/giftcard_4.png",
+                _id: "giftcard-" + price
+              }
+            } />
+          })}
+        </> : <div>No Results Found</div>) : <div>Loading</div>}
       </div>
-      <Cart/>
+      <Cart />
     </div>
   );
 }

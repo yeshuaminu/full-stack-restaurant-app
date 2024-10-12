@@ -16,6 +16,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: fit-content;
 }
 
 body {
@@ -110,7 +112,7 @@ p {
   overflow-y: auto;
 }
 
-.card.dish .p-container {
+.card.dish .p-container, .card.giftcard .p-container {
   padding-left: 1rem;
   padding-right: 1rem;
   gap: 1rem;
@@ -119,13 +121,14 @@ p {
 .card p {
   white-space: pre-wrap;
   text-align: center;
+  flex-grow: 1;
 }
 
-.card.dish p {
+.card.dish p, .card.giftcard p {
   text-align: left;
 }
 
-.card.dish .button-container {
+.card .button-container {
   height: 50px;
   border-top: 3px solid lightgreen;
   background-color: lightgoldenrodyellow;
@@ -134,7 +137,7 @@ p {
   align-items: center;
 }
 
-.card.dish .button-container button {
+.card .button-container button {
   padding: 5px;
   border: 2px solid dodgerblue;
   color: navy;
@@ -143,7 +146,7 @@ p {
   font-size: medium;
 }
 
-.card.dish .button-container button:hover {
+.card .button-container button:hover {
   background-color: dodgerblue;
   color: white;
   cursor: pointer;
@@ -264,7 +267,7 @@ p {
   gap: 0.5rem;
 }
 
-.account-management button, .search button, .register-form button, .account-management a {
+.account-management button, .search button, .simple-form button, .account-management a {
   padding: 5px;
   background-color: lightgreen;
   color: white;
@@ -277,14 +280,14 @@ p {
   font-size: initial;
 }
 
-.account-management button:active, .search button:active, .register-form button:active, .account-management a:active {
+.account-management button:active, .search button:active, .simple-form button:active, .account-management a:active {
   border-style: inset;
 }
 .search {
   display: flex;
 }
 
-.register-form {
+.simple-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -293,21 +296,42 @@ p {
   padding-top: 2.5rem;
 }
 
-.register-form button, .register-form input {
+.simple-form button, .simple-form input {
   padding: 3px;
 }
 
-.register-form label {
+.simple-form label {
   display: flex;
   flex-direction: column;
 }
 
-.sticker {
+.sticker, footer .link {
   background-color: lightsteelblue;
   border-radius: 15px;
   padding: 5px;
   color:lemonchiffon;
   font-family: "Updock", cursive;
+}
+
+footer a {
+  font-size: 23px;
+  box-sizing: border-box;
+  /* height: fit-content; */
+  height: 33px;
+  padding: 5px;
+}
+
+footer {
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer a img {
+/* height: 1em; */
+max-height: 100%;
 }
 
 .user-name {
@@ -316,4 +340,14 @@ p {
 
 .title {
   font-size: 50px;
+}
+
+.simple-form textarea {
+  height: 8em;
+  resize: none;
+}
+
+.social-media {
+  display: flex;
+  gap:5px
 }

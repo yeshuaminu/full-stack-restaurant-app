@@ -1,11 +1,10 @@
 "use client"
 
 import Cart from "@/app/components/Cart";
-import AppContext from "@/app/contexts/appContext";
-import { useContext, useEffect, useState } from "react";
+import ProductCard from "@/app/components/ProductCard";
+import { useEffect, useState } from "react";
 
 export default function Dishes({ params: { restaurantId } }) {
-  const {addItem, cart} = useContext(AppContext)
   const [dishData, setDishData] = useState(null)
   const [search, setSearch] = useState("")
   const [submittedSearch, setSubmittedSearch] = useState("")
@@ -32,19 +31,7 @@ export default function Dishes({ params: { restaurantId } }) {
       </div>
       <div className="card-grid">
         {dishData ? (filteredList.length ? filteredList.map((dish) => {
-          return <div className="card dish" key={dish._id}>
-            <div className="img-container" style={{backgroundImage: `url("${dish.image}")`}}>
-              {/* <img src={dish.image} /> */}
-            </div>
-            <h1>{dish.name}</h1>
-            <div className="p-container">
-              <p>{dish.description}</p>
-              <div>${dish.price}.00</div>
-            </div>
-            <div className="button-container">
-              <button onClick={() => {addItem(dish)}}>+ Add to Cart 🛒</button>
-            </div>
-          </div>
+          return <ProductCard type="dish" product={dish} key={dish._id}/>
         }) : <div>No Results Found</div>) : <div>Loading</div>}
       </div>
       <Cart/>

@@ -11,6 +11,7 @@ export default function Register() {
         password: "",
         confirm: "",
     })
+    const [status, setStatus] = useState(null)
     function onChange(e) {
         setData({ ...data, [e.target.name]: e.target.value });
     }
@@ -32,12 +33,12 @@ export default function Register() {
 
         if (!response.ok) {
             const errorData = await response.json()
-            alert(errorData?.message || "Error creating account")
+            setStatus(errorData?.message || "Error creating account")
         } else {
-            router.push("/")
+            setStatus("Successfully Created Account!")
         }
     }
-    return <form className="register-form" onSubmit={handleSubmit}>
+    return <form className="simple-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <label>
             Name
@@ -56,5 +57,6 @@ export default function Register() {
             <input name="confirm" onChange={onChange} required value={data.confirm} type="password" />
         </label>
         <button>Create Account</button>
+        {status && <div>{status}</div>}
     </form>
 }
