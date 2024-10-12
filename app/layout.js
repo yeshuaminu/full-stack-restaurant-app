@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
   }
 
   async function getUserData() {
-    const response = await fetch(`/api/users/me`)
+    const response = await fetch(`/api/users/me${window.location.search}`)
     if (response.ok) {
       const body = await response.json()
       console.log(body)
