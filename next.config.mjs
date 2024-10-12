@@ -5,7 +5,7 @@ const nextConfig = {
             beforeFiles: [
                 {
                     source: "/api/:path*",
-                    destination: "https://obscure-ravine-54236-e0396b82ae28.herokuapp.com/api/:path*"
+                    destination: process.env.NODE_ENV === "production" ? "https://fastcoast-49418-2bf189b934a2.herokuapp.com/api/:path*" : "http://localhost:8080/api/:path*"
                 }
             ]
         }
